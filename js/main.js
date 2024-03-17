@@ -641,6 +641,19 @@ var profilesKey = 'darksouls3_profiles';
 
             $.jStorage.set(profilesKey, profiles);
         });
+        // Collapse All Toggle
+        $("#toggleCollapseAll").change(function() {
+            var isCollapsed = $(this).is(':checked');
+        $('.collapse').each(function() {
+            
+        if(isCollapsed) {
+            $(this).collapse('hide');
+        } else {
+            $(this).collapse('show');
+        }
+    });
+});
+         
      });
 })( jQuery );
 
