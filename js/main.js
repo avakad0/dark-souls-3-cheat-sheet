@@ -293,6 +293,40 @@ var profilesKey = 'darksouls3_profiles';
 
         calculateTotals();
 
+        $('#toggleCollapseAll').change(function () {
+
+            
+            if ($(this).data("lastState") === null || $(this).data("lastState") === 0) {
+
+                    // close all
+                    $('.collapse').collapse('show');
+
+                    // next state will be open all
+                    $(this).data("lastState",1);
+
+                }
+                
+            else {
+                
+
+                // initial state...
+                // override accordion behavior and open all
+                $('.panel-collapse.in').removeData('bs.collapse.in')
+                .collapse({parent:true, toggle:false})
+                .collapse('hide')
+                .removeData('bs.collapse.in')
+                // restore single panel behavior
+                .collapse({parent:'#tabPlaythrough', toggle:false});
+
+                // next state will be close all
+                $(this).data("lastState",0);
+            }
+            var hidden = !$(this).is(':checked');
+            $('body').toggleClass('collapse_all', !hidden);
+
+        });
+});
+
     });
 
     function initializeProfile(profile_name) {
@@ -641,19 +675,6 @@ var profilesKey = 'darksouls3_profiles';
 
             $.jStorage.set(profilesKey, profiles);
         });
-        // Collapse All Toggle
-        $("#toggleCollapseAll").change(function() {
-            var isCollapsed = $(this).is(':checked');
-        $('.collapse').each(function() {
-            
-        if(isCollapsed) {
-            $(this).collapse('hide');
-        } else {
-            $(this).collapse('show');
-        }
-    });
-});
-         
      });
 })( jQuery );
 
